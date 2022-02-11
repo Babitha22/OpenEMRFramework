@@ -9,4 +9,8 @@ Launch Browser
       Open Browser     browser=edge    executable_path=${EXECDIR}\\drivers\\msedgedriver.exe
      Maximize Browser Window
       Set Selenium Implicit Wait    30s
-     Go To    url=https://demo.openemr.io/b/openemr/index.php
+     Go To    url=https://demo.openemr.io/b/openemr
+
+End Browser
+    Capture Page Screenshot
+    Close Browser
