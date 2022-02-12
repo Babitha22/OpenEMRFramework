@@ -7,10 +7,19 @@ Resource    ../base/common_functionality.resource
 Test Setup      Launch Browser
 Test Teardown   End Browser
 
+Test Template       Verify Invalid Credentials Template
+
 *** Test Cases ***
-Verify Invalid Credentials Test
-    Input Text    id=authUser    john
-    Input Password    id=clearPass    john123
-    Select From List By Label    name=languageChoice    Dutch
+TC1     John        john123     Dutch       Invalid username or password
+TC2     peter       peter123    Danish      Invalid username or password
+TC3     ${EMPTY}    peter123        Dutch       Invalid username or password
+TC4     peter       ${EMPTY}        Greek       Invalid username or password
+
+*** Keywords ***
+Verify Invalid Credentials Template
+    [Arguments]    ${username}     ${password}     ${language}     ${expected_error}
+    Input Text    id=authUser    ${username}
+    Input Password    id=clearPass    ${password}
+    Select From List By Label    name=languageChoice    ${language}
     Click Element    xpath=//button[@type='submit']
-    Element Should Contain    //div[contains(text(),'Invalid')]    Invalid username or password
+    Element Should Contain    //div[contains(text(),'Invalid')]    ${expected_error}
