@@ -1,8 +1,8 @@
 *** Settings ***
 Documentation      This suit file handles all the test case related to the
 ...     invalid credentials
-Library     SeleniumLibrary
-Resource    ../base/common_functionality.resource
+
+Resource    ../pages/login_page.resource
 
 Test Setup      Launch Browser
 Test Teardown   End Browser
@@ -18,8 +18,8 @@ TC4     peter       ${EMPTY}        Greek       Invalid username or password
 *** Keywords ***
 Verify Invalid Credentials Template
     [Arguments]    ${username}     ${password}     ${language}     ${expected_error}
-    Input Text    id=authUser    ${username}
-    Input Password    id=clearPass    ${password}
-    Select From List By Label    name=languageChoice    ${language}
-    Click Element    xpath=//button[@type='submit']
-    Element Should Contain    //div[contains(text(),'Invalid')]    ${expected_error}
+    Enter Username     ${username}
+    Enter Password     ${password}
+    Select Language Using Label    ${language}
+    Click Login
+    validate Invalid Error Message    ${expected_error}
